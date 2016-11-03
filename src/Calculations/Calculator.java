@@ -4,6 +4,11 @@
  * and open the template in the editor.
  */
 package Calculations;
+import java.util.Stack;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 
 /**
  *
@@ -35,7 +40,6 @@ public class Calculator extends javax.swing.JFrame {
         btnPL = new javax.swing.JButton();
         btnPR = new javax.swing.JButton();
         btnPower = new javax.swing.JButton();
-        btnMod = new javax.swing.JButton();
         btn7 = new javax.swing.JButton();
         btn8 = new javax.swing.JButton();
         btn9 = new javax.swing.JButton();
@@ -50,9 +54,9 @@ public class Calculator extends javax.swing.JFrame {
         btnMinus = new javax.swing.JButton();
         btnC = new javax.swing.JButton();
         btn0 = new javax.swing.JButton();
-        btnDot = new javax.swing.JButton();
         btnPlus = new javax.swing.JButton();
         btnEquals = new javax.swing.JButton();
+        btnBackspace = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -85,14 +89,6 @@ public class Calculator extends javax.swing.JFrame {
         btnPower.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPowerActionPerformed(evt);
-            }
-        });
-
-        btnMod.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btnMod.setText("%");
-        btnMod.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModActionPerformed(evt);
             }
         });
 
@@ -208,14 +204,6 @@ public class Calculator extends javax.swing.JFrame {
             }
         });
 
-        btnDot.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btnDot.setText(".");
-        btnDot.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDotActionPerformed(evt);
-            }
-        });
-
         btnPlus.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnPlus.setText("+");
         btnPlus.addActionListener(new java.awt.event.ActionListener() {
@@ -229,6 +217,14 @@ public class Calculator extends javax.swing.JFrame {
         btnEquals.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEqualsActionPerformed(evt);
+            }
+        });
+
+        btnBackspace.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnBackspace.setText("<-");
+        btnBackspace.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackspaceActionPerformed(evt);
             }
         });
 
@@ -249,7 +245,7 @@ public class Calculator extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btn9, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnMult, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnDiv, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnPL, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -257,7 +253,7 @@ public class Calculator extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnPower, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnMod, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnMult, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btn4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -265,24 +261,24 @@ public class Calculator extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btn6, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnDiv, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnMinus, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnEquals, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnC, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btn2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btn3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnC, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btn0, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnBackspace, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn0, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnDot, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnPlus, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnEquals, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(btnPlus, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(21, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTxtDisplay)
@@ -298,67 +294,72 @@ public class Calculator extends javax.swing.JFrame {
                     .addComponent(btnPL, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPR, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPower, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnMod, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnMult, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn7, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn8, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn9, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnMult, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDiv, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn4, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn5, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn6, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDiv, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn3, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMinus, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnC, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn0, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDot, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPlus, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn3, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnC, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn0, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBackspace, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnPlus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEquals, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
+
+        jTxtDisplay.setEditable(false);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTxtDisplayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtDisplayActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jTxtDisplayActionPerformed
 
     private void btnPRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPRActionPerformed
         // TODO add your handling code here:
-        String Enternumber = jTxtDisplay.getText() + btnPR.getText();
-        jTxtDisplay.setText(Enternumber);
+         String txt = jTxtDisplay.getText();
+         if (!txt.contains("("))
+             jTxtDisplay.setText("Syntax Error");
+         else
+            jTxtDisplay.setText(txt + ")");
     }//GEN-LAST:event_btnPRActionPerformed
 
     private void btnPowerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPowerActionPerformed
          
-        firstNum = Double.parseDouble(jTxtDisplay.getText());
-        jTxtDisplay.setText("");
-        operation = "^";
+        String txt = jTxtDisplay.getText();
+        
+           if (txt.endsWith("" + '+') || txt.endsWith("" + '-') || txt.endsWith("" + '*') || txt.endsWith("" + '/') || txt.endsWith("" + '^')|| txt.endsWith("" + '('))
+            jTxtDisplay.setText("Syntax Error");
+            else
+               jTxtDisplay.setText(txt + "^");
+            operation = "^";
+        
     }//GEN-LAST:event_btnPowerActionPerformed
 
     private void btnPLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPLActionPerformed
-         String Enternumber = jTxtDisplay.getText() + btnPL.getText();
-        jTxtDisplay.setText(Enternumber);
+        //String Enternumber = jTxtDisplay.getText() + btnPL.getText();
+        String txt = jTxtDisplay.getText();
+        jTxtDisplay.setText(txt + "(");
     }//GEN-LAST:event_btnPLActionPerformed
-
-    private void btnModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModActionPerformed
-         
-        firstNum = Double.parseDouble(jTxtDisplay.getText());
-        jTxtDisplay.setText("");
-        operation = "%";
-    }//GEN-LAST:event_btnModActionPerformed
 
     private void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
          String Enternumber = jTxtDisplay.getText() + btn7.getText();
@@ -377,9 +378,14 @@ public class Calculator extends javax.swing.JFrame {
 
     private void btnMultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMultActionPerformed
          
-        firstNum = Double.parseDouble(jTxtDisplay.getText());
-        jTxtDisplay.setText("");
-        operation = "*";
+        String txt = jTxtDisplay.getText();
+        
+           if (txt.endsWith("" + '+') || txt.endsWith("" + '-') || txt.endsWith("" + '*') || txt.endsWith("" + '/') || txt.endsWith("" + '^')|| txt.endsWith("" + '('))
+            jTxtDisplay.setText("Syntax Error");
+            else
+               jTxtDisplay.setText(txt + "*");
+            operation = "*";
+        
     }//GEN-LAST:event_btnMultActionPerformed
 
     private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
@@ -399,9 +405,14 @@ public class Calculator extends javax.swing.JFrame {
 
     private void btnDivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDivActionPerformed
        
-        firstNum = Double.parseDouble(jTxtDisplay.getText());
-        jTxtDisplay.setText("");
-        operation = "/";
+        String txt = jTxtDisplay.getText();
+        
+           if (txt.endsWith("" + '+') || txt.endsWith("" + '-') || txt.endsWith("" + '*') || txt.endsWith("" + '/') || txt.endsWith("" + '^')|| txt.endsWith("" + '('))
+            jTxtDisplay.setText("Syntax Error");
+            else
+               jTxtDisplay.setText(txt + "/");
+            operation = "/";
+        
     }//GEN-LAST:event_btnDivActionPerformed
 
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
@@ -421,9 +432,14 @@ public class Calculator extends javax.swing.JFrame {
 
     private void btnMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinusActionPerformed
         
-        firstNum = Double.parseDouble(jTxtDisplay.getText());
-        jTxtDisplay.setText("");
-        operation = "-";
+        String txt = jTxtDisplay.getText();
+        
+           if (txt.endsWith("" + '+') || txt.endsWith("" + '-') || txt.endsWith("" + '*') || txt.endsWith("" + '/') || txt.endsWith("" + '^') || txt.endsWith("" + '('))
+            jTxtDisplay.setText("Syntax Error");
+            else
+               jTxtDisplay.setText(txt + "-");
+            operation = "-";
+        
     }//GEN-LAST:event_btnMinusActionPerformed
 
     private void btnCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCActionPerformed
@@ -436,22 +452,245 @@ public class Calculator extends javax.swing.JFrame {
         jTxtDisplay.setText(Enternumber);
     }//GEN-LAST:event_btn0ActionPerformed
 
-    private void btnDotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDotActionPerformed
-         String Enternumber = jTxtDisplay.getText() + btnDot.getText();
-        jTxtDisplay.setText(Enternumber);
-    }//GEN-LAST:event_btnDotActionPerformed
-
     private void btnPlusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlusActionPerformed
-         
-        firstNum = Double.parseDouble(jTxtDisplay.getText());
-        jTxtDisplay.setText("");
-        operation = "+";
+
+        String txt = jTxtDisplay.getText();
+        
+           // firstNum = Double.parseDouble(jTxtDisplay.getText());
+           if (txt.endsWith("" + '+') || txt.endsWith("" + '-') || txt.endsWith("" + '*') || txt.endsWith("" + '/') || txt.endsWith("" + '^') || txt.endsWith("" + '('))
+            jTxtDisplay.setText("Syntax Error");
+            else
+               jTxtDisplay.setText(txt + "+");
+            operation = "+";
+        
+       
+            //jTxtDisplay.setText(txt + "+");
+        
     }//GEN-LAST:event_btnPlusActionPerformed
 
     private void btnEqualsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEqualsActionPerformed
         
         String answer;
-        secondNum = Double.parseDouble(jTxtDisplay.getText());
+        //secondNum = Double.parseDouble(jTxtDisplay.getText());
+        String txt = jTxtDisplay.getText();
+        char [] check = txt.toCharArray();
+        boolean correctSyntax = true;
+        int lp = 0, rp = 0;
+        for (int i=0; i < check.length; i++)
+        {
+            if (check[i] == '(')
+            {
+                lp++;
+            }
+            if (check[i] == ')')
+            {
+                rp++;
+            }
+            
+        }
+        
+        if (!txt.contains("" + '+') && !txt.contains("" + '-') && !txt.contains("" + '*') && !txt.contains("" + '/'))
+            jTxtDisplay.setText("Syntax Error");
+        if (txt.endsWith("" + '+') || txt.endsWith("" + '-') || txt.endsWith("" + '*') || txt.endsWith("" + '/'))
+            jTxtDisplay.setText("Syntax Error");
+            
+        
+        if (lp != rp)
+        {
+            jTxtDisplay.setText("Syntax Error");
+            
+            //return;
+        }
+        else if(txt.contains("Syntax Error") || txt.contains("Undefined"))
+        {
+            btnEquals.disable();
+        }
+        else
+        {
+            Stack<String> opstack = new Stack<String>();
+            ArrayList<String> output = new ArrayList<String>();
+           for(int i=0; i < check.length; i++)
+            {
+                boolean operator;
+                if (check[i] == '+' || check[i] == '-' || check[i] == '*' || check[i] == '/' || check[i] == '%' || check[i] == '^')
+                    operator = true;
+                else
+                    operator = false;
+               
+                
+                if (check[i] != '+' && check[i] != '-' && check[i] != '*' && check[i] != '/' && check[i] != '%' && check[i] != '^'  && check[i] != ')' && check[i] != '(')
+                {
+
+                    int index = i;
+                    String num = "";
+                    while (check[index] != '+' && check[index] != '-' && check[index] != '*' && check[index] != '/' && check[index] != '%' && check[index] != ')' && check[index] != '(' && check[index] != '^')
+                    {                        
+                        num = num + check[index];
+                        index++;         
+                        if (index >= check.length)
+                            break;
+                    }
+                    output.add(output.size(), "" + num);
+                    i = index -1;
+
+                    //output.add(output.size(), "" + check[i]);
+                }
+                else if (check[i] == '(')
+                {
+                    if (check[i-1] != '+' && check[i-1] != '-' && check[i-1] != '*' && check[i-1] != '/' && check[i-1] != '%' && check[i-1] != '^' )
+                        opstack.push("*");
+                    opstack.push("" + check[i]);
+                    
+                }
+                
+                else if (check[i] == ')')
+                   {
+                      // int index = i;
+                       while (!opstack.peek().equals("("))
+                       {
+                           if (check[i] != '(')
+                                output.add(output.size(), opstack.peek());
+                           opstack.pop();
+                       }
+                   }
+                else if (check[i] == '+' || check[i] == '-' || check[i] == '*' || check[i] == '/' || check[i] == '%' || check[i] == '^' )
+                {
+                    if (check[i] == '*' || check[i] == '/')
+                    {
+                        if (opstack.isEmpty())
+                            opstack.push("" + check[i]);
+                            
+                        else if (opstack.peek().equals('^'))
+                        {
+                            output.add(output.size(), opstack.peek());
+                            opstack.pop();
+                            
+                        }
+                        else
+                            opstack.push("" + check[i]);
+                            
+                        
+                    }
+                    else if (check[i] == '+' || check[i] == '-')
+                    {
+                        if (opstack.isEmpty())
+                            opstack.push("" + check[i]);
+                        
+                        else if (opstack.peek().equals('*') || opstack.peek().equals('/') || opstack.peek().equals('^'))
+                        {
+                            output.add(output.size(), opstack.peek());
+                            opstack.pop();
+                        }
+                        else
+                            opstack.push("" + check[i]);
+                        }
+                    else
+                        opstack.push("" + check[i]);
+                    }
+                   
+                   }
+            
+                   /*
+                    else
+                       opstack.push("" + check[i]);
+*/
+                      for (int i=0; i < output.size(); i++)
+                          System.out.println(output.get(i));
+               
+            
+            
+            while (!opstack.isEmpty())
+            {
+                if (!opstack.peek().equals("(") && !opstack.peek().equals(")"))
+                    output.add(output.size(), opstack.peek());
+                opstack.pop();
+            }
+            /////////////////////
+            
+           boolean digit = false;
+            Stack<String> operandStack = new Stack<String>();
+            for (int i=0; i < output.size(); i++)
+            {
+                System.out.println("output array at: " + i + " is " + output.get(i));
+                for (int j=0; j < output.get(i).length(); j++)
+                {
+                    if (Character.isDigit(output.get(i).charAt(j)))
+                        digit = true;
+                    else
+                        digit = false;
+                }
+               // System.out.println("state of digit is " + digit);
+                
+                if (digit == true)
+                {
+                    operandStack.push(output.get(i));
+                    
+                }
+                else
+                {
+                    
+                    String operation = output.get(i);
+                    double num2 = Double.parseDouble(operandStack.peek());
+                    operandStack.pop();
+                    double num1 = Double.parseDouble(operandStack.peek());
+                    operandStack.pop();
+                    
+                   // System.out.println("num1 is " + num1 + "num2 is " + num2);
+                    
+                    if (operation.equals("+"))
+                    {
+                        result = num1 + num2;
+                        answer = String.format("%.0f", result);
+                        //jTxtDisplay.setText(answer);
+                        operandStack.push(answer);
+                        
+                        //System.out.println("DONE");
+                    }
+                    else if (operation.equals("-"))
+                    {
+                        result = num1 - num2;
+                        answer = String.format("%.0f", result);
+                        operandStack.push(answer);
+                    }
+                    else if (operation.equals("*"))
+                    {
+                        result = num1 * num2;
+                        answer = String.format("%.0f", result);
+                        operandStack.push(answer);
+                    }
+                    else if (operation.equals("/"))
+                    {
+                        if (num2 == 0)
+                        {
+                            jTxtDisplay.setText("Undefined");
+
+                        }
+                        else
+                        {
+                            result = num1 / num2;
+                            answer = String.format("%.0f", result);
+                            operandStack.push(answer);
+                        }
+                    }
+                    else if (operation.equals("^"))
+                    {
+                        result = java.lang.Math.pow(num1, num2);
+                        answer = String.format("%.0f", result);
+                        operandStack.push(answer);
+                        
+                    }
+                }
+                
+                
+                
+                
+                    
+            }
+            jTxtDisplay.setText(operandStack.peek());
+            
+        }
+            
+        /*    
         if (operation == "+")
         {
             result = firstNum + secondNum;
@@ -475,7 +714,7 @@ public class Calculator extends javax.swing.JFrame {
             if (secondNum == 0)
             {
                 jTxtDisplay.setText("Undefined");
-                
+
             }
             else
             {
@@ -490,7 +729,18 @@ public class Calculator extends javax.swing.JFrame {
             answer = String.format("%.0f", result);
             jTxtDisplay.setText(answer);
         }
+            
+        
+       */
+       
     }//GEN-LAST:event_btnEqualsActionPerformed
+
+    private void btnBackspaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackspaceActionPerformed
+        String Enternumber = jTxtDisplay.getText();
+        if (Enternumber.length() != 0)
+            Enternumber = Enternumber.substring(0, Enternumber.length() - 1);
+        jTxtDisplay.setText(Enternumber);
+    }//GEN-LAST:event_btnBackspaceActionPerformed
 
     /**
      * @param args the command line arguments
@@ -538,12 +788,11 @@ public class Calculator extends javax.swing.JFrame {
     private javax.swing.JButton btn7;
     private javax.swing.JButton btn8;
     private javax.swing.JButton btn9;
+    private javax.swing.JButton btnBackspace;
     private javax.swing.JButton btnC;
     private javax.swing.JButton btnDiv;
-    private javax.swing.JButton btnDot;
     private javax.swing.JButton btnEquals;
     private javax.swing.JButton btnMinus;
-    private javax.swing.JButton btnMod;
     private javax.swing.JButton btnMult;
     private javax.swing.JButton btnPL;
     private javax.swing.JButton btnPR;
